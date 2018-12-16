@@ -100,6 +100,7 @@ class Ui_MainWindow(object):
         self.checkBox_StoreData.setObjectName("checkBox_StoreData")
         self.gridLayout_2.addWidget(self.checkBox_StoreData, 0, 1, 1, 1, QtCore.Qt.AlignRight)
         
+        '''
         self.start_push_button = QtWidgets.QPushButton(self.tab_FrameViewer)
         self.start_push_button.setGeometry(QtCore.QRect(10, 10, 131, 40))
         self.start_push_button.setObjectName("start_push_button")
@@ -114,9 +115,34 @@ class Ui_MainWindow(object):
         self.progressBar = QtWidgets.QProgressBar(self.tab_FrameViewer)
         self.progressBar.setGeometry(QtCore.QRect(160, 20, 124, 25))
         self.progressBar.setObjectName("progressBar")
-        
-        
+        '''
 
+        
+        self.start_push_button = QtWidgets.QPushButton(self.tab_FrameViewer)
+        self.start_push_button.setGeometry(QtCore.QRect(350, 10, 131, 40))
+        self.start_push_button.setObjectName("start_push_button")
+        self.custom_range_box = QtWidgets.QLineEdit(self.tab_FrameViewer)
+        self.custom_range_box.setGeometry(QtCore.QRect(90, 10, 71, 41))
+        self.custom_range_box.setObjectName("custom_range_box")
+        self.threshold_box = QtWidgets.QLineEdit(self.tab_FrameViewer)
+        self.threshold_box.setGeometry(QtCore.QRect(260, 10, 61, 41))
+        self.threshold_box.setObjectName("threshold_box")
+        self.threshold_label = QtWidgets.QLabel(self.tab_FrameViewer)
+        self.threshold_label.setGeometry(QtCore.QRect(170, 10, 81, 23))
+        self.threshold_label.setObjectName("threshold_label")
+        self.label_2 = QtWidgets.QLabel(self.tab_FrameViewer)
+        self.label_2.setGeometry(QtCore.QRect(20, 10, 80, 23))
+        self.label_2.setObjectName("label_2")
+        self.customRange_label = QtWidgets.QLabel(self.tab_FrameViewer)
+        self.customRange_label.setGeometry(QtCore.QRect(30, 30, 80, 23))
+        self.customRange_label.setObjectName("customRange_label")
+        self.progressBar = QtWidgets.QProgressBar(self.tab_FrameViewer)
+        self.progressBar.setGeometry(QtCore.QRect(500, 20, 124, 25))
+        self.progressBar.setProperty("value", 24)
+        self.progressBar.setObjectName("progressBar")
+        self.threshold_label_2 = QtWidgets.QLabel(self.tab_FrameViewer)
+        self.threshold_label_2.setGeometry(QtCore.QRect(170, 30, 81, 23))
+        self.threshold_label_2.setObjectName("threshold_label_2")
         
         
         #self.graphicsView = PlotWidget(self.tab_FrameViewer)
@@ -128,9 +154,10 @@ class Ui_MainWindow(object):
         graphicsView = self.graphicsView
         self.graphicsView.setObjectName("graphicsView")
         self.graphicsView.setAspectLocked(True) #keeps aspect locked for imported video frames, otherwise it stretches everything out.        
-        
+        self.gridLayout_2.setContentsMargins(0,40,0,0) # Lowers grphicsView a little, so the options are visible at the top
         
         self.gridLayout_2.addWidget(self.graphicsView, 1, 1, 1, 1)
+        
         self.tabWidget.addTab(self.tab_FrameViewer, "")
         self.tab_Data = QtWidgets.QWidget()
         self.tab_Data.setObjectName("tab_Data")
@@ -256,8 +283,13 @@ class Ui_MainWindow(object):
         self.actionTutorial.setText(_translate("MainWindow", "Tutorial"))
         
         self.start_push_button.setText(_translate("MainWindow", "START"))
-        self.threshold_label.setText(_translate("MainWindow", "Threshold"))
+        self.threshold_label.setText(_translate("MainWindow", "   Custom"))
+        self.threshold_label_2.setText(_translate("MainWindow", "Threshold"))
+        self.customRange_label.setText(_translate("MainWindow", "Range"))
+        self.label_2.setText(_translate("MainWindow", "Custom"))
+        self.threshold_box.setText(_translate("MainWindow", "0.5"))
         
+        self.progressBar.setProperty("value", 0)
 
         
         '''

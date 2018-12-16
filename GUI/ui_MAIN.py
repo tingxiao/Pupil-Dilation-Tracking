@@ -26,13 +26,12 @@ frames= 0
 image_list = [] #stores paths of all frames extracted from video
 radius_data = []
 
-for x in range(0,50):    #TO DO: add unique range based on # of image frames. Left like this for now for testing purposes
+for x in range(0,100):    #TO DO: add unique range based on # of image frames. Left like this for now for testing purposes
     radius_data.append(0)
 
 image_list = upload.image_list
 
 csv_file = 'radius_data.csv'
-thresholdMultiplier = 0.5
 
 usePrevFrame = []
 
@@ -149,12 +148,7 @@ class MyMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         print("radius_data saved to CSV as", csv_file)
         
 
-
-
-        
-        
 #- - - - - - Ellipse Fitting - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-
 
         
     def onClick(self,event):        
@@ -163,11 +157,15 @@ class MyMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Getting center coordinates from click
         cor = img_arr.mapFromScene(event.scenePos()) #maps coordinate from image pixels
-        x = cor.x()
-        y = cor.y()
-        coordinates = [x,y]
-        print("Center click:", coordinates)
+        x = int(cor.x())
+        y = int(cor.y())
+        coordinates = [y,x] #Axis of image is flipped for some reason
+        print("Center click:", coordinates, "**Axis flipped for img**")
         
+        
+        thresholdMultiplier = self.threshold_box.text()
+        thresholdMultiplier = float(thresholdMultiplier)
+        print("ThresholdMultiplier:",thresholdMultiplier)
         
         
         if 'circle.jpg' not in image_list[count]:
@@ -192,7 +190,8 @@ class MyMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         img = ellipseFitting.get_binary_image_mat(frame,threshold)
         
         ##########################################################
-        estimate_center = np.array([600,800])
+        estimate_center = np.array(coordinates)
+      #  estimate_center = np.array(coordinates)
         print("estimate_center:", estimate_center)
         estimate_radius = 300
 
@@ -258,22 +257,32 @@ class MyMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         img_ar = pg.ImageItem(ar)
         self.graphicsView.addItem(img_ar)
         image_list[frame_num] = output_frame
-
         
+            
     def fitFrameRange(self):
+    
+        thresholdMultiplier = self.threshold_box.text()
+        thresholdMultiplier = float(thresholdMultiplier)
+        print("ThresholdMultiplier:",thresholdMultiplier)
         
-        start = 1 
-        stop = 50
+        customRange = self.custom_range_box.text()
+        customRange = customRange.split(',')
+        
+        start = int(customRange[0])
+        stop = int(customRange[1])
+        
         
         rangeLen = stop - start
-        for i in range(start,stop):
+        for i in range(start,stop+1):
             self.fitSingleFrame(image_list[i], i, 'circles', thresholdMultiplier)
             
             print(i/rangeLen)
             
             self.progressBar.setProperty("value", (i/rangeLen)*100)
             
-            
+        
+        
+        
     def checkBox(self):
         if self.checkBox_StoreData.isChecked() == True:
             usePrevFrame.append(count)
