@@ -235,12 +235,26 @@ def save_image(img, center, radius, a, b, phi, file_name, lum = 255):
     imageio.imwrite(file_name, show_circle_img.transpose())
     return
 
+# Adds 1st column with frame number, 2nd column with data
+
 def export_to_csv(radius_data, csv_file):
+    with open (csv_file, 'w') as csvfile:
+        writer = csv.writer(csvfile, lineterminator = '\n', delimiter=',')
+        for i in range(len(radius_data)):
+            writer.writerows(zip([i+1],[radius_data[i]]))
+    return
+
+
+'''
+# Saves only data (1 column in the file)
+
+def export_to_csv(radius_data,csv_file):
     with open (csv_file, 'w') as csvfile:
         writer = csv.writer(csvfile, lineterminator = '\n', delimiter=' ')
         for num in radius_data:
             writer.writerow([num])
     return
+'''
 
 def isNaN(num):
     return num != num
