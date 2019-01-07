@@ -1,11 +1,4 @@
 
-
-# -*- coding: utf-8 -*-
-"""
-Created on Tue May 23 15:51:55 2017
-
-@author: Julia
-"""
 import sys
 import cv2
 from PyQt5 import *
@@ -20,6 +13,7 @@ import main
 
 from PIL import Image
 
+global directory
 
 image_list = [] #stores paths of all frames extracted from video
     
@@ -47,18 +41,21 @@ def splitVideo(vidFileName, imageListInput, folderName):
             print("{} images are extacted in {}.".format(framecount,folder))
             framecount += 1
  
+    if not os.path.exists(folder + "_FRAMEOUTPUT"):
+        os.mkdir(folder + "_FRAMEOUTPUT")
+ 
         
 def getFPS():
-    #note: This fuction does not work on the video from Dr. Gaynes because it does not have FPS in the vid properties.
-    #      It works on other videos. For now we will just calculate the FPS for that specific video.
+    #note: This fuction does not work if the video does not have the FPS in its properties
     global vidcap
     fps = vidcap.get(cv2.CAP_PROP_FPS)
     return fps 
 
 def calculateFPS():
+    #Just for testing on specific vids
     s = 41
     frames = 737
-    fps = 737/41
+    fps = frames/s
     return fps
 
 
@@ -66,16 +63,19 @@ def openVidFile():
     import ui_MAIN
     from ui_MAIN import MyMainWindow
     global image_list
-    global video_title
+
     fileName = openFile() #openFile() opens file browser and returns name of selected video file
     directory = str(QFileDialog.getExistingDirectory(ui_MAIN.MyMainWindow(),"Select Folder to Store Frames")) # File dialog opens for user to create/selet a folder to store the frames extracted from video
     print("directory is:", directory)
     splitVideo(fileName, image_list, directory) 
     
-    #TO DO: instead of a given range, feed it the num of frames extracted from video. Left like this for testing purposes for now.
-    #TO DO: add loading status bar while frames are being uploaded        
-   
-    for x in range(1, 51):
+.
+    #TO DO: add loading status bar while frames are being uploaded      
+    
+    path, dirs, files = next(os.walk(directory))
+    file_count = len(files)
+
+    for x in range(1, file_count + 1):
         image_list.append(directory + "/frame" + str(x) + ".jpg")
         
     #ui_MAIN.MyMainWindow.horizontalSlider.setRange(0,len(image_list)-1)
