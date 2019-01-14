@@ -69,7 +69,7 @@ def openVidFile():
     print("directory is:", directory)
     splitVideo(fileName, image_list, directory) 
     
-.
+
     #TO DO: add loading status bar while frames are being uploaded      
     
     path, dirs, files = next(os.walk(directory))

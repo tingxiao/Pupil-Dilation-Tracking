@@ -76,12 +76,12 @@ class MyMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 navigation = "R"
                    
 # - - - - - - - - - - - - - - - - -  File Menu - - - - - - - - - - - - - - - - - #
-'''
- If "open" is triggered in the file menu, the file dialog opens and allows the user to select a video to extract frames from then it prompts them to 
- select/create a folder to store those frames into. Frames that have already been extracted from a video can also be imported into the program by selecting one of the frames
- when the file dialog open. This function also calles update() to display the current frame onto to view, calculates the number of frames, and creates an empty array for the frames.
-''' 
-   def FILEMENU_upload(self):
+    '''
+     If "open" is triggered in the file menu, the file dialog opens and allows the user to select a video to extract frames from then it prompts them to 
+     select/create a folder to store those frames into. Frames that have already been extracted from a video can also be imported into the program by selecting one of the frames
+     when the file dialog open. This function also calles update() to display the current frame onto to view, calculates the number of frames, and creates an empty array for the frames.
+    ''' 
+    def FILEMENU_upload(self):
         global originalImageDir
         global originalImageFolder
         global fps
@@ -99,10 +99,10 @@ class MyMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
   
 #- - - - - - - Displaying image on GUI and updating - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-'''
-opens the frame and displays it onto the graphics view. The label and slider position are updated with the frame currently being viewed. 
-The checkbox also checks or unchecks depending on if that frame has been added to the UsePrevData array.
-'''
+    '''
+    opens the frame and displays it onto the graphics view. The label and slider position are updated with the frame currently being viewed. 
+    The checkbox also checks or unchecks depending on if that frame has been added to the UsePrevData array.
+    '''
     def update(self):
         global img_arr
         global maxCount
@@ -121,19 +121,19 @@ The checkbox also checks or unchecks depending on if that frame has been added t
              self.checkBox_UsePrevData.setChecked(True) 
         else:
             self.checkBox_UsePrevData.setChecked(False) 
- 
-'''
-Saving to csv file with the original folder name that the frame images were stored in with _DATA added to the name 
-'''
+     
+    '''
+    Saving to csv file with the original folder name that the frame images were stored in with _DATA added to the name 
+    '''
     def csv(self):
         csv_file = originalImageFolder + "_DATA.csv"
         ellipseFitting.export_to_csv(radius_data,csv_file)
         print("radius_data saved to CSV as", csv_file)
         
-'''
-Applies Kalman filter to the csv file - which must be created first
-# TO DO - if csv file does not exist, create it then apply kalman
-'''        
+    '''
+    Applies Kalman filter to the csv file - which must be created first
+    # TO DO - if csv file does not exist, create it then apply kalman
+    '''        
     def applyKalman(self):
         csv_file = originalImageFolder + "_DATA.csv"
         kalmanFilter.applyKalmanFilter(csv_file, originalImageFolder)
@@ -141,10 +141,10 @@ Applies Kalman filter to the csv file - which must be created first
 
 #- - - - - - Ellipse Fitting - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
-'''
-If there is a click on the image on the graphicsView, then collect the coordinates, update the threshold multiplier (if necessary), check if the frame already has a circle,
-
-'''        
+    '''
+    If there is a click on the image on the graphicsView, then collect the coordinates, update the threshold multiplier (if necessary), check if the frame already has a circle,
+    
+    '''        
     def onClick(self,event):        
         global coordinates
         global count
@@ -170,9 +170,9 @@ If there is a click on the image on the graphicsView, then collect the coordinat
     
             
        
-'''
-Detection on a single frame using ellipse fitting
-'''
+    '''
+    Detection on a single frame using ellipse fitting
+    '''
     def fitSingleFrame(self, frame, frame_num, outputFolder, thresholdMultiplier):  
         global frameName
         global outputName
@@ -270,9 +270,9 @@ Detection on a single frame using ellipse fitting
         self.graphicsView.addItem(img_ar)
         image_list[frame_num] = output_frame
 
-'''
-For fitting a range of frames, the range is specified in the text box with a dash (EX: frames one to five --->   1-5)
-'''
+    '''
+    For fitting a range of frames, the range is specified in the text box with a dash (EX: frames one to five --->   1-5)
+    '''
     def fitFrameRange(self):
         output_directory = originalImageFolder + "_FRAMEOUTPUT"
         
