@@ -5,7 +5,7 @@ import pandas as pd
 from filterpy.kalman import FixedLagSmoother, KalmanFilter
 import numpy.random as random
 
-def applyKalmanFilter(csv_file, directory_name):
+def applyKalmanFilter(csv_file, kalman_file):
 
     # Read in csv file into a seperate dataframe
     csvFile = pd.read_csv(csv_file, header=None, dtype=np.float64)
@@ -53,11 +53,9 @@ def applyKalmanFilter(csv_file, directory_name):
     plt.plot(kf_x[:, 0], label='KF', ls='--')
     plt.legend(loc=4)
     
-    print('standard deviation fixed-lag: {:.3f}'.format(np.mean(fls_res)))
-    print('standard deviation kalman: {:.3f}'.format(np.mean(kf_res)))
-    print(x_smooth[:])#input frame value to print smoothed x val at that point
-    
-    
+   # print('standard deviation fixed-lag: {:.3f}'.format(np.mean(fls_res)))
+   # print('standard deviation kalman: {:.3f}'.format(np.mean(kf_res)))
+   # print(x_smooth[:])#input frame value to print smoothed x val at that point
     
     
     #----
@@ -70,7 +68,7 @@ def applyKalmanFilter(csv_file, directory_name):
     
     #---
     
-    kalman_file = directory_name + "_KALMANFILTER.csv"
+    
     with open (kalman_file, 'w') as csvfile:
         writer = csv.writer(csvfile, lineterminator = '\n', delimiter=' ')
         for num in x_smooth:
